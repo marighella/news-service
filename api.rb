@@ -1,5 +1,6 @@
 require 'grape'
 require 'json'
+require_relative 'lib/organization.rb'
 
 
 module News
@@ -10,14 +11,7 @@ module News
     resource :organization do
       desc 'Return a list of all posts'
       get :posts do
-        @posts = [{ name: 'p1'
-        },
-        {
-          name: 'p2'
-        }
-        ]
-
-        @posts
+        Organization.get.posts
       end
     end
   end

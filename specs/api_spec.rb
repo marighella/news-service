@@ -14,11 +14,12 @@ describe News::API do
         assert is_valid_post?(post), "#{post} is not a valid post"
       end
     end
-
   end
 
   def is_valid_post? post
-    post.keys.include? [:sha, :path, :name, :metadata]
+    required_fields = ['sha', 'path', 'name', 'metadata']
+
+    (required_fields - post.keys).size == 0
   end
 
 end
