@@ -7,7 +7,8 @@ describe News::API do
 
   describe 'when I peform a http GET on /<organization>/posts' do
     it 'should return all posts for the given organization' do
-      get '/organization/posts'
+      organization = 'marighella'
+      get "/organization/#{organization}/posts"
       response = JSON.parse(last_response.body)
 
       response.each do |post|

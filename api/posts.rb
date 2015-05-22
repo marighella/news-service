@@ -5,7 +5,10 @@ module News
 
     resource :organization do
       desc 'Return a list of all posts'
-      get :posts do
+      params do
+        requires :organization, type: String, desc: 'Work with this organization'
+      end
+      get ':organization/posts' do
         Organization.get.posts
       end
     end
