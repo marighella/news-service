@@ -4,12 +4,19 @@ module News
     format :json
 
     resource :organization do
-      desc 'Return a list of all posts'
       params do
         requires :organization, type: String, desc: 'Work with this organization'
       end
+
+
+      desc 'Return a list of all posts'
       get ':organization/posts' do
-        Organization.get.posts
+        Organization.get(params[:organization]).posts
+      end
+
+      desc 'Return a complete post with body'
+      get ':organization/posts/:id' do
+        Organization.get(params[:organization]).posts(params[:id])
       end
     end
   end

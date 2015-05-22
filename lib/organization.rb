@@ -10,14 +10,19 @@ class Post
 end
 
 class Organization
-  def initialize
+  def initialize id
+    @id = id
   end
 
-  def self.get
-    Organization.new
+  def self.get id = nil
+    Organization.new(id)
   end
 
-  def posts
-    [1..10].map{ |sha| Post.new }
+  def posts id = nil
+    unless id
+      [1..10].map{ |sha| Post.new }
+    else
+      Post.new
+    end
   end
 end
