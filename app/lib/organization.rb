@@ -10,11 +10,7 @@ class Organization
   end
 
   def post id = nil
-    {
-      name:1,
-      sha: 2,
-      path: 3
-    }
+    @repository.post id
   end
 
   def posts

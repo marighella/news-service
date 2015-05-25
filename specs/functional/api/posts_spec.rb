@@ -6,20 +6,13 @@ describe News::API do
   end
 
   before do
-    class MockRepo
+    post = { name:1, path:2, sha:3 }
 
-      def posts
-        [
-          {
-            name:1,
-            path:2,
-            sha:3
-          }
-        ]
-      end
-    end
+    repo = mock()
+    repo.stubs(:posts).returns([post])
+    repo.stubs(:post).returns(post)
 
-    Organization.any_instance.stubs(:get_repository).returns(MockRepo.new)
+    Organization.any_instance.stubs(:get_repository).returns(repo)
   end
 
   describe 'given the organization' do
