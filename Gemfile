@@ -5,4 +5,7 @@ gem 'grape'
 gem 'rake'
 gem 'rack-test'
 gem 'minitest'
+gem 'mocha'
 gem 'pry'
+
+gem 'octokit'
