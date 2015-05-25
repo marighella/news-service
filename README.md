@@ -1,10 +1,10 @@
 ### News Service
 
-Lists all 
-GET <organization>/posts
+Lists all posts
+GET organization/<organization>/repository/<repository>/posts
 
 Get one
-GET <organization>/posts/<id>
+GET organization/<organization>/repository/<repository>/posts/<id>
 
 
 ## First Steps
