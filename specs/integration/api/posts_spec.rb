@@ -15,14 +15,23 @@ describe 'Integration with github' do
       @repository = 'blog'
     end
 
-    it 'should return all posts for the given organization' do
+    it 'should return a list of posts' do
       get "/organization/#{@organization}/#{@repository}/posts"
       response = JSON.parse(last_response.body)
 
       assert response.kind_of?(Array)
-      response.each do |post|
-        assert is_valid_post?(post), "#{post} is not a valid post"
-      end
+    end
+
+    it 'should return date, title and published to each post' do
+      get "/organization/#{@organization}/#{@repository}/posts"
+      response = JSON.parse(last_response.body)
+
+      first_post = response.first
+
+      assert first_post['metadata']
+      assert first_post['metadata']['date']
+      assert first_post['metadata']['title']
+      assert first_post['metadata']['published']
     end
   end
 
