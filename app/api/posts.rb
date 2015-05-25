@@ -9,9 +9,9 @@ module News
       end
 
 
-      desc 'Return a list of all posts'
+      desc 'Return a list of posts filtered by year and month'
       get ':organization/:repository/posts' do
-        Organization.get(params[:organization], params[:repository]).posts
+        Organization.get(params[:organization], params[:repository]).posts(params)
       end
 
       desc 'Return a complete post with body'

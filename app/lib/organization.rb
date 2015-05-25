@@ -13,8 +13,8 @@ class Organization
     @repository.post id
   end
 
-  def posts
-    @repository.posts
+  def posts filter
+    @repository.posts filter
   end
 
   def get_repository organization_id, repository_id
