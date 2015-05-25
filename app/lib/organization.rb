@@ -1,28 +1,27 @@
-class Post
-  attr_reader :sha, :path, :name, :metadata
-
-  def to_json(*a)
-    { sha:@sha,
-      path:@path,
-      name:@name,
-      metadata:@metadata }.to_json
-  end
-end
+require_relative 'github/github.rb'
 
 class Organization
-  def initialize id
-    @id = id
+  def initialize organization_id = nil, repository_id = nil
+    @repository = get_repository(organization_id, repository_id)
   end
 
-  def self.get id = nil
-    Organization.new(id)
+  def self.get organization_id = nil, repository_id = nil
+    Organization.new(organization_id, repository_id)
   end
 
-  def posts id = nil
-    unless id
-      [1..10].map{ |sha| Post.new }
-    else
-      Post.new
-    end
+  def post id = nil
+    {
+      name:1,
+      sha: 2,
+      path: 3
+    }
+  end
+
+  def posts
+    @repository.posts
+  end
+
+  def get_repository organization_id, repository_id
+    Github.new organization_id, repository_id
   end
 end

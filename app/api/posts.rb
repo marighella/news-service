@@ -10,13 +10,13 @@ module News
 
 
       desc 'Return a list of all posts'
-      get ':organization/posts' do
-        Organization.get(params[:organization]).posts
+      get ':organization/:repository/posts' do
+        Organization.get(params[:organization], params[:repository]).posts
       end
 
       desc 'Return a complete post with body'
-      get ':organization/posts/:id' do
-        Organization.get(params[:organization]).posts(params[:id])
+      get ':organization/:repository/posts/:id' do
+        Organization.get(params[:organization], params[:repository]).post(params[:id])
       end
     end
   end
