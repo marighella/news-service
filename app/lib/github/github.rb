@@ -1,10 +1,15 @@
 require 'octokit'
 class Github
 
-  def initialize organization, repository
+  def initialize organization, repository, access_token
     @organization = organization
     @repository = repository
-    @client = Octokit::Client.new client_id:ENV['CLIENT_ID'], client_secret:ENV['CLIENT_SECRET']
+
+    unless access_token
+      @client = Octokit::Client.new client_id:ENV['CLIENT_ID'], client_secret:ENV['CLIENT_SECRET']
+    else
+      @client = Octokit::Client.new access_token:access_token
+    end
   end
 
   def posts filter
