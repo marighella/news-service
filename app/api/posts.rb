@@ -3,13 +3,6 @@ module News
     version 'v1', using: :header, vendor: 'marighella'
     format :json
 
-    before do
-      headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE, OPTIONS'
-      headers['Access-Control-Allow-Origin'] = '*'
-      headers['Access-Control-Allow-Headers'] = 'accept, authorization, origin, content-type'
-      headers['Access-Control-Allow-Credentials'] = 'true'
-    end
-
     resource :organization do
       params do
         requires :organization, type: String, desc: 'Work with this organization'

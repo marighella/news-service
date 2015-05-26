@@ -7,5 +7,5 @@ gem 'rack-test'
 gem 'minitest'
 gem 'mocha'
 gem 'pry'
-
+gem 'rack-cors'
 gem 'octokit'
