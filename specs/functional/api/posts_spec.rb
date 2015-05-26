@@ -33,7 +33,7 @@ describe News::API do
     end
 
     it 'should return one complete post' do
-      get "/organization/#{@organization}/#{@repository}/posts/#{@id_post}"
+      get "/organization/#{@organization}/#{@repository}/post?path=#{@id_post}"
       response = JSON.parse(last_response.body)
 
       assert is_valid_post?(response), "#{response} is not a valid post"

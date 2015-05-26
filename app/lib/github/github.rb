@@ -5,6 +5,8 @@ class Github
   def initialize organization, repository, access_token
     @organization = organization
     @repository = repository
+    @full_name  = "#{organization}/#{repository}"
+    @access_token = access_token
 
     unless access_token
       @client = Octokit::Client.new client_id:ENV['CLIENT_ID'], client_secret:ENV['CLIENT_SECRET']
@@ -16,6 +18,13 @@ class Github
   def posts filter
     raw_data = @client.search_code "repo:#{@organization}/#{@repository} path:#{path(filter)} extension:md"
     raw_data[:items].map { |item| to_post(item) }
+  end
+
+  def post id
+    raw_post = Octokit.contents @full_name, path:id
+    post = to_post(raw_post)
+    post[:metadata] = decode(raw_post[:content])
+    post
   end
 
   private
@@ -33,9 +42,8 @@ class Github
     }
   end
 
-  def metadata github_post
-    raw_post = Octokit.contents github_post[:repository].full_name, path:github_post[:path]
-    content = Base64.decode64(raw_post[:content])
+  def decode raw_content
+    content = Base64.decode64(raw_content)
     YAML.load(content)
   end
 end

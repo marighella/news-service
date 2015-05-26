@@ -39,6 +39,14 @@ describe 'Integration with github' do
 
       assert_equal month, JANUARY
     end
+
+    it 'should return a single post by path' do
+      path  = '_posts/2015/01/2015-01-19-a-fe-nao-costuma.md'
+      get "/organization/#{@organization}/#{@repository}/post?path=#{path}"
+      posts = JSON.parse(last_response.body)
+
+      assert posts['metadata']
+    end
   end
 
 end
