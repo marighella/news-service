@@ -5,7 +5,8 @@ module News
 
     resource :organization do
       params do
-        requires :organization, type: String, desc: 'Work with this organization'
+        requires :organization, type: String, desc: 'Wich organization I need get the information?'
+        requires :repository, type: String, desc: 'Okay, I need know too the repository ( database? )'
       end
 
 
