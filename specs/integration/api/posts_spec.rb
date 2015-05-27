@@ -50,6 +50,14 @@ describe 'Integration with github' do
       end
     end
 
+    it 'should return empty' do
+      get "/organization/#{@organization}/#{@repository}/posts?year=1990&month=1"
+      response = JSON.parse(last_response.body)
+
+      assert response.kind_of?(Array)
+      assert response.empty?
+    end
+
     it 'should return a single post by path' do
       path  = '_posts/2015/01/2015-01-19-a-fe-nao-costuma.md'
       get "/organization/#{@organization}/#{@repository}/post?path=#{path}"

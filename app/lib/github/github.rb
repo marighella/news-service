@@ -16,16 +16,24 @@ class Github
   end
 
   def posts filter
-    raw_data = ''
-    if(filter[:month])
-      raw_data = @client.contents @full_name, path:path(filter)
-    else
-      raw_data = @client.search_code "repo:#{@organization}/#{@repository} path:#{path(filter)} extension:md"
-      raw_data = raw_data[:items]
-    end
-
+    raw_data = search(filter)
     raw_data = filter_by_title(raw_data, filter[:title])
     raw_data.map { |item| to_post(item) }
+  end
+
+  def search filter
+    raw_data = []
+    begin
+      if(filter[:month])
+        raw_data = @client.contents @full_name, path:path(filter)
+      else
+        raw_data = @client.search_code "repo:#{@organization}/#{@repository} path:#{path(filter)} extension:md"
+        raw_data = raw_data[:items]
+      end
+    rescue Octokit::NotFound
+      raw_data = []
+    end
+    raw_data
   end
 
   def filter_by_title raw_data, title = nil
@@ -46,7 +54,7 @@ class Github
   private
   def path filter
     path = "_posts/#{filter.year}"
-    path += ("/%02d" % filter.month) if filter.month
+    path += ("/%02d" % filter.month.to_i) if filter.month
     path
   end
 
