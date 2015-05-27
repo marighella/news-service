@@ -11,7 +11,8 @@ module News
 
       desc 'Return a complete post with body'
       get ':organization/:repository/post' do
-        Organization.get(params[:organization], params[:repository]).post(params[:path])
+        access_token = headers['Authorization'].split[1] if headers['Authorization']
+        Organization.get(params[:organization], params[:repository], access_token).post(params[:path])
       end
 
       desc 'Return a list of posts filtered by year and month'
