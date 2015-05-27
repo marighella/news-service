@@ -68,7 +68,10 @@ class Github
 
   def decode raw_content
     content = Base64.decode64(raw_content)
-    body    = content.force_encoding('UTF-8').split("---\n").last
-    return YAML.load(content), body
+    parts = content.force_encoding('UTF-8').split('---')
+    parts = parts.select {|part| not part.empty?}
+    metadata = YAML.load(parts.shift)
+    body    = parts.join('---')
+    return metadata, body
   end
 end
