@@ -40,6 +40,16 @@ describe 'Integration with github' do
       assert_equal month, JANUARY
     end
 
+    it 'should return posts filtered by title' do
+      get "/organization/#{@organization}/#{@repository}/posts?year=2015&month=1&title=filtrado"
+      response = JSON.parse(last_response.body)
+
+      assert response.kind_of?(Array)
+      response.each do |post|
+          assert_match(/filtrado/, post['name'])
+      end
+    end
+
     it 'should return a single post by path' do
       path  = '_posts/2015/01/2015-01-19-a-fe-nao-costuma.md'
       get "/organization/#{@organization}/#{@repository}/post?path=#{path}"

@@ -24,7 +24,16 @@ class Github
       raw_data = raw_data[:items]
     end
 
+    raw_data = filter_by_title(raw_data, filter[:title])
     raw_data.map { |item| to_post(item) }
+  end
+
+  def filter_by_title raw_data, title = nil
+    return raw_data if title.nil?
+
+    raw_data.select do |item|
+      item[:name] =~ Regexp.new(title)
+    end
   end
 
   def post id
