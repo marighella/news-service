@@ -23,7 +23,7 @@ class Github
   def post id
     raw_post = Octokit.contents @full_name, path:id
     post = to_post(raw_post)
-    post[:metadata] = decode(raw_post[:content])
+    post[:metadata], post[:body] = decode(raw_post[:content])
     post
   end
 
@@ -44,6 +44,7 @@ class Github
 
   def decode raw_content
     content = Base64.decode64(raw_content)
-    YAML.load(content)
+    body    = content.force_encoding('UTF-8').split("---\n").last
+    return YAML.load(content), body
   end
 end

@@ -46,6 +46,7 @@ describe 'Integration with github' do
       posts = JSON.parse(last_response.body)
 
       assert posts['metadata']
+      assert posts['body']
     end
   end
 
