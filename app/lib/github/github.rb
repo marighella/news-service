@@ -16,12 +16,19 @@ class Github
   end
 
   def posts filter
-    raw_data = @client.search_code "repo:#{@organization}/#{@repository} path:#{path(filter)} extension:md"
-    raw_data[:items].map { |item| to_post(item) }
+    raw_data = ''
+    if(filter[:month])
+      raw_data = @client.contents @full_name, path:path(filter)
+    else
+      raw_data = @client.search_code "repo:#{@organization}/#{@repository} path:#{path(filter)} extension:md"
+      raw_data = raw_data[:items]
+    end
+
+    raw_data.map { |item| to_post(item) }
   end
 
   def post id
-    raw_post = Octokit.contents @full_name, path:id
+    raw_post = @client.contents @full_name, path:id
     post = to_post(raw_post)
     post[:metadata], post[:body] = decode(raw_post[:content])
     post
