@@ -15,4 +15,6 @@ n = namespace :test do
 end
 
 task :test => [n[:functional], n[:integration]]
+task :functional => [n[:functional]]
+task :integration => [n[:integration]]
 task :default => n[:functional]
