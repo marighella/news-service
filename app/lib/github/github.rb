@@ -51,6 +51,13 @@ class Github
     post
   end
 
+  def tags filter
+    #{"agroecologia":["_posts/2012/07/2012-07-25-3-mitos-sobre-a-agroecologia.md"]}
+    metadata_tag = @client.contents @full_name, { ref:'gh-pages', path:'tags.json' }
+    raw_tag      = @client.blob @full_name, metadata_tag[:sha]
+    decode(raw_tag[:content])[0]
+  end
+
   private
   def path filter
     path = "_posts/#{filter.year}"

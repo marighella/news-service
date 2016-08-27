@@ -66,6 +66,12 @@ describe 'Integration with github' do
       assert posts['metadata']
       assert posts['body']
     end
-  end
 
+    it 'should return a tags file' do
+      get "/organization/#{@organization}/#{@repository}/tags"
+      tags = JSON.parse(last_response.body)
+
+      assert_equal tags, {"tag-opa" => ["_posts/2012/07/2012-07-25-3-mitos-sobre-a-agroecologia.md"]}
+    end
+  end
 end

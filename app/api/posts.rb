@@ -21,6 +21,11 @@ module News
         Organization.get(params[:organization], params[:repository], access_token).posts(params)
       end
 
+      desc 'Return a file from JSON'
+      get ':organization/:repository/tags' do
+        access_token = headers['Authorization'].split[1] if headers['Authorization']
+        Organization.get(params[:organization], params[:repository], access_token).tags(params)
+      end
     end
   end
 end

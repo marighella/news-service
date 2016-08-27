@@ -17,6 +17,10 @@ class Organization
     @repository.posts filter
   end
 
+  def tags filter
+   @repository.tags filter
+  end
+
   def get_repository organization_id, repository_id, access_token
     Github.new organization_id, repository_id, access_token
   end
